@@ -13,7 +13,7 @@ function handleLogin(event) {
 
   } 
   
-   else if (email === "dashboard@gmail.com" && password === "1236") {
+   else if (email === true) {
      alert("login");
     // Optional: redirect
     // window.location.href = "dashboardpage.html";
