@@ -9,7 +9,7 @@ function checkUserAndRedirect(name, flat) {
   const name = document.getElementById("name").value.trim().toLowerCase();
   const flat = document.getElementById("flat").value.trim();
 
-  if (name === "bhavana" && flat === "101") {
+  if (name === "ravi" && flat === "101") {
     localStorage.setItem("currentUser", "Flat-101");
     window.location.href = "ravimsg.html";
 
