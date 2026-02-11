@@ -13,7 +13,7 @@ function handleLogin(event) {
 
   } 
   
-   if (email !== "" && password !== "") {
+   else if (email !== "" && password !== "") {
     alert("Login successful");
 
     // Redirect to dashboard (or any page you want)
