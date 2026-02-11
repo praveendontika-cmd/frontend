@@ -19,11 +19,11 @@ function handleLogin(event) {
     // window.location.href = "dashboardpage.html";
     window.location.href = "dashboardpage.html";
   }
-  else if(email === "bhavana@gmail.com" && password === "123") {
+  else if(email === "ravi@gmail.com" && password === "123") {
     alert("login");
     // Optional: redirect
-    // window.location.href = "bhavanapage.html";
-    window.location.href = "bhavana.html";
+    // window.location.href = "ravipage.html";
+    window.location.href = "ravi.html";
   } 
   // Sneha
    else if(email === "sneha@gmail.com" && password === "sss") {
