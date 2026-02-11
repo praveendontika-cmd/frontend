@@ -13,12 +13,12 @@ function handleLogin(event) {
 
   } 
   
-   else if (email === true) {
-     alert("login");
-    // Optional: redirect
-    // window.location.href = "dashboardpage.html";
+   if (email !== "" && password !== "") {
+    alert("Login successful");
+
+    // Redirect to dashboard (or any page you want)
     window.location.href = "dashboardpage.html";
-  }
+} 
   else if(email === "ravi@gmail.com" && password === "123") {
     alert("login");
     // Optional: redirect
