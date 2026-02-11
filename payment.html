@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="payment.css">
+</head>
+<script src="payment.js"></script>
+<body>
+    <div class="payment-section">
+  <h2>Maintenance Payment</h2>
+
+  <div class="payment-summary">
+    <div><strong>Name:</strong> <span id="pName">Resident Name</span></div>
+    <div><strong>Flat No:</strong> <span id="pFlat">B-102</span></div>
+    <div><strong>Month:</strong> <span id="pMonth">February 2026</span></div>
+    <div><strong>Amount:</strong> ₹ <span id="pAmount">2500</span></div>
+  </div>
+
+  <form id="paymentForm">
+    <label>Payment Method</label>
+    <select id="payMethod" required>
+      <option value="">Select</option>
+      <option value="upi">UPI</option>
+      <option value="card">Debit / Credit Card</option>
+      <option value="netbanking">Net Banking</option>
+      <option value="cash">Cash (Office)</option>
+    </select>
+
+    <div id="upiField" class="hidden">
+      <label>UPI ID</label>
+      <input type="text" placeholder="name@upi" />
+    </div>
+
+    <button type="submit" class="pay-btn"><a href="paynow.html">Pay Now</a></button>
+  </form>
+
+  <div id="paySuccess" class="pay-success">
+    ✅ Payment Successful! Thank you.
+  </div>
+</div>
+
+</body>
+</html>

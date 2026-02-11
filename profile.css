@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f9;
+}
+
+/* Top Bar */
+.topbar {
+  background: #7cd78e;
+  color: #fff;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-btn {
+  color: #d4d6e1;
+  background: #080bcd;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+ margin-left: 10%;
+}
+
+/* Profile */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.profile-card {
+  background: #fff;
+  width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.profile-pic img {
+  border-radius: 50%;
+  margin-bottom: 15px;
+  
+}
+
+.email {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.profile-info div {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #5a67d8;
+
+}
+.back-to{
+  background: #546feb;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+

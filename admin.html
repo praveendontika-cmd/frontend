@@ -1,0 +1,211 @@
+<div class="message-box" style="
+  max-width:1100px;
+  margin:20px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  animation: slideUp 0.8s ease;
+">
+  <h2 style="margin-top:0;color:#5b86e5;">📨 Send Message to Member</h2>
+
+  <input id="memberName" type="text" placeholder="Enter Member Name / Flat No"
+    style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;margin-bottom:10px;">
+
+  <textarea id="adminMessage" rows="3" placeholder="Type your message here..."
+    style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;margin-bottom:10px;"></textarea>
+
+  <button class="refresh-btn" onclick="sendAdminMessage()">🚀 Send Message</button>
+</div>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Complaints</title>
+  <style>
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease;
+    }
+
+    .complaints-container {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .complaint-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      animation: slideUp 0.8s ease;
+      transition: transform 0.3s ease;
+    }
+
+    .complaint-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .type {
+      font-size: 18px;
+      font-weight: bold;
+      color: #5b86e5;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    select {
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .Pending { background: #f39c12; }
+    .InProgress { background: #3498db; }
+    .Resolved { background: #2ecc71; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+
+    .refresh-btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .refresh-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <h1>👨‍💼 Admin Panel - All Complaints</h1>
+    <button class="refresh-btn" onclick="loadComplaints()">🔄 Refresh</button>
+  </div>
+
+  <div class="complaints-container" id="complaintsContainer">
+    <!-- Complaints will load here -->
+  </div>
+
+  <script>
+    function loadComplaints() {
+      const container = document.getElementById("complaintsContainer");
+      container.innerHTML = "";
+
+      let complaints = JSON.parse(localStorage.getItem("allComplaints")) || [];
+
+      if (complaints.length === 0) {
+        container.innerHTML = "<p style='color:white;text-align:center;font-size:18px;'>No complaints yet.</p>";
+        return;
+      }
+
+      complaints.reverse().forEach((c, index) => {
+        const statusClass = c.status.replace(" ", "");
+
+        const card = document.createElement("div");
+        card.className = "complaint-card";
+
+        card.innerHTML = `
+          <div class="type">${c.type}</div>
+          <div class="desc">${c.description}</div>
+          <div class="date">📅 ${c.date}</div>
+
+          <div class="status-row">
+            <div class="status-badge ${statusClass}">
+              ${c.status}
+            </div>
+
+            <select onchange="updateStatus(${complaints.length - 1 - index}, this.value)">
+              <option value="Pending" ${c.status==="Pending"?"selected":""}>Pending</option>
+              <option value="In Progress" ${c.status==="In Progress"?"selected":""}>In Progress</option>
+              <option value="Resolved" ${c.status==="Resolved"?"selected":""}>Resolved</option>
+            </select>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function updateStatus(index, newStatus) {
+      let complaints = JSON.parse(localStorage.getItem("allComplaints")) || [];
+      complaints[index].status = newStatus;
+      localStorage.setItem("allComplaints", JSON.stringify(complaints));
+      loadComplaints();
+    }
+
+    // Load on page start
+    loadComplaints();
+  </script>
+
+</body>
+</html>

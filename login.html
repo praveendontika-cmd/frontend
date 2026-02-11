@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Private Community - Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<script>
+function handleLogin(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
+
+  // Admin emails
+  const adminEmails = [
+    "admin@gmail.com",
+    "admin@privatecommunity.com"
+  ];
+
+  if (adminEmails.includes(email)) {
+    // Go to admin page
+    window.location.href = "adminpage.html";
+  } else {
+    // Go to resident dashboard
+    window.location.href = "dashboardpage.html";
+  }
+}
+</script>
+
+<script src="login.js"></script>
+
+
+<body>
+
+  <div class="login-container">
+    <h2>Private Community</h2>
+    <p class="subtitle">Member Login</p>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+  <div class="input-group">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter your email" required>
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter your password" required>
+  </div>
+
+  <p class="extra">
+    Don't have an account? <a href="#">Sign Up</a>
+  </p>
+
+  <button type="submit" class="login-btn">Login</button>
+</form>
+</form>
+
+
+  </div>
+
+</body>
+</html>
