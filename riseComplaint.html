@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Raise a Complaint - Private Community</title>
+
   <style>
     body {
       margin: 0;
@@ -22,7 +23,6 @@
       border-radius: 20px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.25);
       padding: 30px;
-      animation: slideUp 1s ease;
     }
 
     .title {
@@ -31,6 +31,15 @@
       font-weight: bold;
       color: #2c3e50;
       margin-bottom: 20px;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
 
     .problem-list {
@@ -49,150 +58,111 @@
       font-weight: 600;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .problem:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
 
     .problem.selected {
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      color: #333;
     }
 
-    textarea {
+    .submit-btn, .back-btn {
       width: 100%;
-      border-radius: 12px;
-      border: 1px solid #ccc;
       padding: 12px;
-      font-size: 14px;
-      resize: none;
-      margin-bottom: 20px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
     }
 
     .submit-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 50px;
-      font-size: 18px;
-      font-weight: bold;
       background: linear-gradient(135deg, #36d1dc, #5b86e5);
       color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      animation: pulse 2s infinite;
     }
 
-    .submit-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #999;
-      margin-top: 12px;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(54,209,220,0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(54,209,220,0); }
-      100% { box-shadow: 0 0 0 0 rgba(54,209,220,0); }
+    .back-btn {
+      background: #ddd;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="card">
-    <div class="title">🛠 Raise a Complaint</div>
-    <div style="padding-left: 70%; padding-bottom: 20px;">
-    <button class="submit-btn"  onclick="submitComplaint()"><a href="dashboardpage.html" style="color: aliceblue;">Back to dashboard</a>
-    </button>
-    </div>
+<div class="card">
+  <div class="title">🛠 Raise a Complaint</div>
 
-    <div class="problem-list">
-      <div class="problem" onclick="selectProblem(this)">💧 Water Leakage</div>
-      <div class="problem" onclick="selectProblem(this)">⚡ Current / Power Issue</div>
-      <div class="problem" onclick="selectProblem(this)">🚿 No Water Supply</div>
-      <div class="problem" onclick="selectProblem(this)">🪟 Window / Door Damage</div>
-      <div class="problem" onclick="selectProblem(this)">🪠 Bathroom Issue</div>
-      <div class="problem" onclick="selectProblem(this)">🧹 Cleaning / Hygiene</div>
-      <div class="problem" onclick="selectProblem(this)">🔌 Switch / Socket Problem</div>
-      <div class="problem" onclick="selectProblem(this)">🛗 Lift Not Working</div>
-    </div>
+  <button class="back-btn" onclick="goBack()"><a href="dashboardpage.html">⬅ Back To Dashboard</a></button>
 
-    <textarea rows="4" placeholder="Describe your problem in detail..."></textarea>
+  <!-- ✅ SELECT FLAT NUMBER -->
+  <select id="flatSelect">
+    <option value="">🏠 Select Flat Number</option>
+    <option value="Flat-101">Flat-101</option>
+    <option value="Flat-102">Flat-102</option>
+    <option value="Flat-103">Flat-103</option>
+    <option value="Flat-104">Flat-104</option>
+  </select>
 
-    <button class="submit-btn" onclick="submitComplaint()">
-      📩 Submit Complaint
-    </button>
-
-    <div class="footer">
-      Private Community • Support Team
-    </div>
+  <div class="problem-list">
+    <div class="problem" onclick="selectProblem(this)">💧 Water Leakage</div>
+    <div class="problem" onclick="selectProblem(this)">⚡ Power Issue</div>
+    <div class="problem" onclick="selectProblem(this)">🚿 No Water Supply</div>
+    <div class="problem" onclick="selectProblem(this)">🪠 Bathroom Issue</div>
+    <div class="problem" onclick="selectProblem(this)">🧹 Cleaning</div>
+    <div class="problem" onclick="selectProblem(this)">🛗 Lift Not Working</div>
   </div>
 
-  <script>
+  <textarea id="description" rows="4" placeholder="Describe your problem..."></textarea>
+
+  <button class="submit-btn" onclick="submitComplaint()">📩 Submit Complaint</button>
+</div>
+
+<script>
+  const currentUser = localStorage.getItem("currentUser");
   let selectedProblem = "";
 
-  function selectProblem(element) {
+  function selectProblem(el) {
     document.querySelectorAll('.problem').forEach(p => p.classList.remove('selected'));
-    element.classList.add('selected');
-    selectedProblem = element.innerText;
+    el.classList.add('selected');
+    selectedProblem = el.innerText;
   }
 
-  function submitComplaint() {
-    const description = document.querySelector("textarea").value;
+  function goBack() {
+    window.history.back();
+  }
 
-    if (!selectedProblem) {
-      alert("Please select a problem type.");
-      return;
-    }
+  async function submitComplaint() {
+    const description = document.getElementById("description").value.trim();
+    const flat = document.getElementById("flatSelect").value;
 
-    if (!description.trim()) {
-      alert("Please describe your problem.");
+    if (!flat || !selectedProblem || !description) {
+      alert("Please select flat, problem, and description");
       return;
     }
 
     const complaint = {
-      id: Date.now(),
       type: selectedProblem,
-      description: description,
+      description,
       status: "Pending",
+      flat,                         // ✅ SELECTED FLAT
       date: new Date().toLocaleString()
     };
 
-    // Get existing complaints
-    let complaints = JSON.parse(localStorage.getItem("allComplaints")) || [];
+    try {
+      await fetch("http://localhost:3000/api/complaints", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(complaint)
+      });
 
-    // Add new complaint
-    complaints.push(complaint);
+      alert("✅ Complaint submitted successfully!");
+      window.location.href = "complaint-received.html";
 
-    // Save back to localStorage
-    localStorage.setItem("allComplaints", JSON.stringify(complaints));
-
-    // Also for single confirmation page
-    localStorage.setItem("complaintType", selectedProblem);
-    localStorage.setItem("complaintDesc", description);
-
-    // Redirect
-    window.location.href = "complaint-received.html";
+    } catch (err) {
+      alert("❌ Backend error. Check server.");
+      console.error(err);
+    }
   }
 </script>
+
 </body>
 </html>

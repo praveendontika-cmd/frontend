@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Complaints - Private Community</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .complaints-container {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .complaint-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .type {
+      font-size: 18px;
+      font-weight: bold;
+      color: #5b86e5;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      display: inline-block;
+    }
+
+    .Pending { background: #f39c12; }
+    .InProgress { background: #3498db; }
+    .Resolved { background: #2ecc71; }
+  </style>
+</head>
+
+<body>
+
+  <h1>📋 My Complaints</h1>
+
+  <div class="complaints-container" id="complaintsContainer"></div>
+
+  <script>
+    // 🔒 LOGIN CHECK
+    const currentUser = localStorage.getItem("currentUser");
+
+    
+
+    async function loadMyComplaints() {
+      try {
+        const res = await fetch(`http://localhost:3000/api/complaints/user/${currentUser}`);
+        const complaints = await res.json();
+
+        const container = document.getElementById("complaintsContainer");
+        container.innerHTML = "";
+
+        if (complaints.length === 0) {
+          container.innerHTML = "<p style='color:white;text-align:center;'>No complaints yet.</p>";
+          return;
+        }
+
+        complaints.reverse().forEach(c => {
+          const card = document.createElement("div");
+          card.className = "complaint-card";
+
+          card.innerHTML = `
+            <div class="type">${c.type}</div>
+            <div class="desc">${c.description}</div>
+            <div class="date">📅 ${c.date}</div>
+            <div class="status-badge ${c.status.replace(" ", "")}">
+              ${c.status}
+            </div>
+          `;
+
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        alert("❌ Could not load complaints. Check backend.");
+        console.error(err);
+      }
+    }
+
+    // Load on page start
+    loadMyComplaints();
+  </script>
+
+</body>
+</html>

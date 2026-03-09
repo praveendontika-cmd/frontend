@@ -1,48 +1,36 @@
+function loginUser() {
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value.trim();
 
-function handleLogin(event) {
-  event.preventDefault();
+  // ================= ADMIN LOGIN =================
+  if (email === "admin@gmail.com" && password === "admin123") {
+    localStorage.clear(); // optional but safe
+    localStorage.setItem("currentUser", "Admin");
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-
-  if (email === "prav.admin@gmail.com" && password === "1230") {
-    alert("login");
-    // Optional: redirect
-    // window.location.href = "adminpage.html";
-    window.location.href = "admin.html";
-
-  } 
-  
-   else if (email !== "" && password !== "") {
-    alert("Login successful");
-
-    // Redirect to dashboard (or any page you want)
-    window.location.href = "dashboardpage.html";
-} 
-  else if(email === "ravi@gmail.com" && password === "123") {
-    alert("login");
-    // Optional: redirect
-    // window.location.href = "ravipage.html";
-    window.location.href = "ravi.html";
-  } 
-  // Sneha
-   else if(email === "sneha@gmail.com" && password === "sss") {
-    alert("login");
-    // Optional: redirect
-    // window.location.href = "snehapage.html";
-    window.location.href = "sneha.html";
-  } 
-
-  
-  else {
-    alert("wrong password");
+    alert("Admin login success");
+    window.location.href = "adminpage.html";
+    return;
   }
-function login() {
-  const username = document.getElementById("username").value;
 
-  // After successful login
-  localStorage.setItem("currentUser", username); 
-  window.location.href = "dashboardpage.html";
-}
-}
+  // ================= RAVI LOGIN =================
+  if (email === "ravi@gmail.com" && password === "101") {
+    localStorage.clear();
+    localStorage.setItem("currentUser", "Flat-101");
 
+    alert("Ravi login success");
+    window.location.href = "ravimsg.html";
+    return;
+  }
+
+  // ================= SNEHA LOGIN =================
+  if (email === "sneha@gmail.com" && password === "103") {
+    localStorage.clear();
+    localStorage.setItem("currentUser", "Flat-103");
+
+    alert("Sneha login success");
+    window.location.href = "snehamsg.html";
+    return;
+  }
+
+  alert("❌ Invalid login details");
+}

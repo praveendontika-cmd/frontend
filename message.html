@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Messages</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .msg-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📩 Your Messages</h2>
+
+  <!-- REQUIRED for Step 5 -->
+  <div id="messages"></div>
+
+  <!-- Step 5 Script -->
+  <script>
+    // Get flat from login (or set manually for now)
+    const flat = localStorage.getItem("flat") || "Flat-101";
+
+    fetch(`http://localhost:3000/api/messages/${flat}`)
+      .then(res => res.json())
+      .then(data => {
+        const msgDiv = document.getElementById("messages");
+        msgDiv.innerHTML = "";
+
+        if (data.length === 0) {
+          msgDiv.innerHTML = "<p>No messages yet.</p>";
+          return;
+        }
+
+        data.forEach(m => {
+          msgDiv.innerHTML += `
+            <div class="msg-card">
+              <b>From:</b> ${m.from}<br>
+              <b>Message:</b> ${m.message}<br>
+              <small>${m.date}</small>
+            </div>
+          `;
+        });
+      })
+      .catch(err => {
+        console.error("Message load error:", err);
+        document.getElementById("messages").innerHTML = "❌ Failed to load messages";
+      });
+  </script>
+
+</body>
+</html>
